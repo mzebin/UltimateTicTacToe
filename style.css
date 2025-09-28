@@ -1,0 +1,183 @@
+/* --- Font Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- CSS Variables (Serika Dark Theme) --- */
+:root {
+    --font-main: 'Inter', sans-serif;
+    --background-color: #2C2E31;
+    --board-bg-color: #323437;
+    --grid-line-color: #414346;
+    --text-color: #E2E2E2;
+    --highlight-color: #E2B714;
+    --player-x-color: #E2B714;
+    --player-o-color: #FFFFFF;
+    --active-board-glow: rgba(226, 183, 20, 0.25);
+    --button-hover-bg: #414346;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    overflow: hidden;
+}
+
+.game-app {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+/* --- Header & Footer --- */
+.game-header, .game-footer {
+    width: 100%;
+}
+
+.game-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--highlight-color);
+    margin-bottom: 10px;
+}
+
+#status-panel {
+    font-size: 1.125rem;
+    font-weight: 500;
+    height: 30px;
+}
+
+#reset-button {
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 8px;
+    border: 1px solid var(--grid-line-color);
+    background-color: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: 0.2s ease;
+    transition-property: background-color, transform;
+}
+
+#reset-button:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-2px);
+}
+
+#reset-button:active {
+    transform: scale(0.95);
+}
+
+#main-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 95vw;
+    height: 95vw;
+    max-width: 480px;
+    max-height: 480px;
+    background-color: var(--grid-line-color);
+    gap: 4px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.small-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: var(--grid-line-color);
+    gap: 3px;
+    position: relative;
+    box-shadow: 0 0 25px 8px rgba(0, 0, 0, 0);
+    transition: box-shadow 0.4s ease;
+}
+
+.cell {
+    background-color: var(--board-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: clamp(24px, 9vw, 42px);
+    font-weight: 700;
+    line-height: 1;
+    aspect-ratio: 1 / 1;
+    transition: background-color 0.3s ease;
+}
+
+.active-board {
+    box-shadow: 0 0 30px 10px var(--active-board-glow);
+    z-index: 10;
+}
+
+.cell.X, .cell.O {
+    transform: scale(0.5);
+    opacity: 0;
+    animation: pop-in 0.3s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pop-in {
+    to { transform: scale(1); opacity: 1; }
+}
+
+.cell.X { color: var(--player-x-color); }
+.cell.O { color: var(--player-o-color); }
+
+.won-board::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    animation: fade-in 0.3s ease;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.winner-mark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(60px, 15vmin, 100px);
+    pointer-events: none;
+    transform: scale(0.5);
+    opacity: 0;
+    animation: pop-in 0.4s 0.2s forwards;
+    z-index: 2;
+}
+
+.winner-mark.X { color: var(--player-x-color); }
+.winner-mark.O { color: var(--player-o-color); }
+
+.game-over .small-board:not(.won-board) {
+    opacity: 0.4;
+    transition: opacity 0.5s ease;
+}
+
+@media (min-width: 768px) {
+    .game-app {
+        justify-content: center;
+        gap: 30px;
+    }
+
+    .game-header h1 { font-size: 2.5rem; } /* 40px */
+    #status-panel { font-size: 1.25rem; } /* 20px */
+    #main-board { margin: 0; }
+    .cell { font-size: 42px; }
+    .winner-mark { font-size: 100px; }
+}

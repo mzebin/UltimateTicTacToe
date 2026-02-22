@@ -1,19 +1,27 @@
-/* --- Font Import --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* ==================================================================================
+   Root Variables
+   ================================================================================== */
 
-/* --- CSS Variables (Serika Dark Theme) --- */
 :root {
-    --font-main: 'Inter', sans-serif;
-    --background-color: #2C2E31;
-    --board-bg-color: #323437;
-    --grid-line-color: #414346;
-    --text-color: #E2E2E2;
-    --highlight-color: #E2B714;
-    --player-x-color: #E2B714;
-    --player-o-color: #FFFFFF;
-    --active-board-glow: rgba(226, 183, 20, 0.25);
-    --button-hover-bg: #414346;
+    --primary-yellow: #FFD700;
+    --dark-grey: #2A2A2A;
+    --medium-grey: #3A3A3A;
+    --light-grey: #4A4A4A;
+    --text-color: #FFFFFF;
+
+    --board-bg-color: var(--dark-grey);
+    --grid-line-color: var(--medium-grey);
+    --player-x-color: var(--primary-yellow);
+    --player-o-color: var(--text-color);
+    --active-board-glow: rgba(255, 215, 0, 0.3);
+
+    --font: 'Poppins', sans-serif;
+    --board-font: 'Inter', sans-serif;
 }
+
+/* ==================================================================================
+   Global Styles
+   ================================================================================== */
 
 * {
     margin: 0;
@@ -22,85 +30,231 @@
 }
 
 body {
-    font-family: var(--font-main);
-    background-color: var(--background-color);
+    font-family: var(--font);
+    background-color: var(--dark-grey);
     color: var(--text-color);
-    overflow: hidden;
-}
-
-.game-app {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 15px;
+}
+
+/* ==================================================================================
+   Layout
+   ================================================================================== */
+
+.game-app {
+    width: 100%;
+    max-width: 500px;
     text-align: center;
 }
 
-/* --- Header & Footer --- */
-.game-header, .game-footer {
-    width: 100%;
+.game-header {
+    margin-bottom: 2rem;
 }
 
 .game-header h1 {
-    font-size: 1.5rem;
+    color: var(--primary-yellow);
     font-weight: 600;
-    color: var(--highlight-color);
-    margin-bottom: 10px;
+    font-size: 2.2rem;
 }
 
-#status-panel {
-    font-size: 1.125rem;
-    font-weight: 500;
-    height: 30px;
+/* ==================================================================================
+   Mode Selection
+   ================================================================================== */
+
+.mode-selection {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    transition: opacity 0.3s ease;
 }
 
-#reset-button {
-    font-family: var(--font-main);
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 12px 30px;
-    border-radius: 8px;
-    border: 1px solid var(--grid-line-color);
-    background-color: transparent;
+.mode-btn {
+    background: none;
+    border: 2px solid var(--light-grey);
     color: var(--text-color);
+    padding: 0.5rem 1.5rem;
+    border-radius: 30px;
     cursor: pointer;
-    transition: 0.2s ease;
-    transition-property: background-color, transform;
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
-#reset-button:hover {
-    background-color: var(--button-hover-bg);
-    transform: translateY(-2px);
+.mode-btn.active {
+    background-color: var(--primary-yellow);
+    border-color: var(--primary-yellow);
+    color: var(--dark-grey);
 }
 
-#reset-button:active {
-    transform: scale(0.95);
+/* ==================================================================================
+   Game Configuration
+   ================================================================================== */
+
+.game-config {
+    background-color: var(--medium-grey);
+    padding: 2rem;
+    border-radius: 12px;
 }
+
+.config-option {
+    margin-bottom: 1.5rem;
+}
+
+.config-option:last-child {
+    margin-bottom: 0;
+}
+
+.config-option label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+select {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--light-grey);
+    color: var(--text-color);
+    border: 2px solid var(--light-grey);
+    border-radius: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    font-size: 1rem;
+    font-family: var(--font);
+    cursor: pointer;
+}
+
+/* ==================================================================================
+   Buttons
+   ================================================================================== */
+
+#start-game-btn {
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+#start-game-btn, .control-buttons button {
+    padding: 1rem;
+    background-color: var(--primary-yellow);
+    color: var(--dark-grey);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: var(--font);
+    transition: background-color 0.2s ease;
+}
+
+#start-game-btn:hover {
+    background-color: #ffeb80;
+}
+
+.control-buttons {
+    width: 100%;
+    max-width: 450px;
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem auto 0;
+}
+
+.control-buttons button {
+    background-color: var(--light-grey);
+    color: var(--text-color);
+    width: 100%;
+}
+
+.control-buttons button:hover {
+    background-color: var(--medium-grey);
+}
+
+/* ==================================================================================
+   Game Info
+   ================================================================================== */
+
+.game-info {
+    margin-top: 1.5rem;
+}
+
+#player-turn, #game-status {
+    min-height: 1.5em;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+#game-status {
+    color: var(--primary-yellow);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.score-board {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: var(--light-grey);
+}
+
+/* ==================================================================================
+   Game Board
+   ================================================================================== */
 
 #main-board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 95vw;
-    height: 95vw;
-    max-width: 480px;
-    max-height: 480px;
-    background-color: var(--grid-line-color);
-    gap: 4px;
-    border-radius: 10px;
-    margin: 20px 0;
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    margin: 1rem auto 0;
+    aspect-ratio: 1 / 1;
 }
 
-.small-board {
+.normal-board, .ultimate-board {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    background-color: var(--grid-line-color);
+    border-radius: 10px;
+}
+
+/* ==================================================================================
+   Board Types
+   ================================================================================== */
+
+.normal-board {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.ultimate-board {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.sub-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     background-color: var(--grid-line-color);
     gap: 3px;
     position: relative;
-    box-shadow: 0 0 25px 8px rgba(0, 0, 0, 0);
-    transition: box-shadow 0.4s ease;
+    box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0);
+    transition: box-shadow 0.4s ease, opacity 0.5s ease;
 }
+
+.active-board {
+    box-shadow: 0 0 20px 5px var(--active-board-glow);
+    z-index: 10;
+}
+
+.ultimate-board.game-over .sub-board:not(.winning-sub-board) {
+    opacity: 0.4;
+}
+
+/* ==================================================================================
+   Cells
+   ================================================================================== */
 
 .cell {
     background-color: var(--board-bg-color);
@@ -108,43 +262,52 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-size: clamp(24px, 9vw, 42px);
+    font-family: var(--board-font);
     font-weight: 700;
     line-height: 1;
     aspect-ratio: 1 / 1;
     transition: background-color 0.3s ease;
 }
 
-.active-board {
-    box-shadow: 0 0 30px 10px var(--active-board-glow);
-    z-index: 10;
+.normal-board .cell {
+    font-size: clamp(24px, 10vw, 48px);
+}
+
+.ultimate-board .cell {
+    font-size: clamp(12px, 3vw, 20px);
+}
+
+.cell:hover {
+    background-color: #333;
 }
 
 .cell.X, .cell.O {
     transform: scale(0.5);
     opacity: 0;
-    animation: pop-in 0.3s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes pop-in {
-    to { transform: scale(1); opacity: 1; }
+    animation: pop-in 0.4s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .cell.X { color: var(--player-x-color); }
 .cell.O { color: var(--player-o-color); }
 
+.cell {
+    contain: layout style paint;
+    will-change: transform;
+}
+
+.ultimate-board .cell {
+    min-height: 0;
+    min-width: 0;
+    flex-shrink: 0
+}
+
 .won-board::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(20, 20, 20, 0.6);
     z-index: 1;
     animation: fade-in 0.3s ease;
-}
-
-@keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }
 
 .winner-mark {
@@ -153,6 +316,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: var(--board-font);
     font-size: clamp(60px, 15vmin, 100px);
     pointer-events: none;
     transform: scale(0.5);
@@ -164,20 +328,127 @@ body {
 .winner-mark.X { color: var(--player-x-color); }
 .winner-mark.O { color: var(--player-o-color); }
 
-.game-over .small-board:not(.won-board) {
-    opacity: 0.4;
-    transition: opacity 0.5s ease;
+/* ==================================================================================
+   Winning Line
+   ================================================================================== */
+
+.winning-line {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
 }
 
-@media (min-width: 768px) {
-    .game-app {
-        justify-content: center;
-        gap: 30px;
-    }
+.winning-line line {
+    stroke: var(--primary-yellow);
+    stroke-width: 10;
+    stroke-linecap: round;
+    animation: draw-line 0.5s ease-out;
+}
 
-    .game-header h1 { font-size: 2.5rem; } /* 40px */
-    #status-panel { font-size: 1.25rem; } /* 20px */
-    #main-board { margin: 0; }
-    .cell { font-size: 42px; }
-    .winner-mark { font-size: 100px; }
+/* ==================================================================================
+   Animations
+   ================================================================================== */
+
+@keyframes pop-in {
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes draw-line {
+    from { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+    to { stroke-dashoffset: 0; }
+}
+
+/* ==================================================================================
+   Media Queries
+   ================================================================================== */
+
+@media (max-width: 480px) {
+    h1 { font-size: 2rem; }
+    .winner-mark { font-size: clamp(40px, 10vmin, 60px); }
+}
+
+/* ==================================================================================
+   Help Button & Modal
+   ================================================================================== */
+
+.help-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-yellow);
+    color: var(--dark-grey);
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.help-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fade-in 0.3s ease;
+}
+
+.modal-content {
+    background-color: var(--medium-grey);
+    margin: 15% auto;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-btn {
+    color: var(--light-grey);
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: var(--text-color);
+}
+
+.instructions h3 {
+    color: var(--primary-yellow);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.instructions p,
+.instructions ul {
+    text-align: left;
+    line-height: 1.6;
+}
+
+.instructions ul {
+    padding-left: 20px;
 }
